@@ -13,7 +13,7 @@ def girl_actions(number, switch_n, switch_s):
     else:
         switch_s[a] = 1
 
-    for i in range(1, min(a, switch_n - a - 1) + 1):
+    for i in range(1, switch_n):
         if a - i >= 0 and a + i < switch_n:
             if switch_s[a - i] == switch_s[a + i]:
                 if switch_s[a - i] == 1:
