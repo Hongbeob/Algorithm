@@ -1,33 +1,25 @@
-# 탑다운(재귀함수, 메모이제이션)
-# 계단 리스트에서 최대 점수를 계산하는 함수
-def max_score(stairs, dp, idx):
-    if idx < 0:
-        return 0
+def solve():
 
-    # 메모이제이션: 이미 계산한 값이 있으면 그 값을 반환
-    if dp[idx] != -1:
-        return dp[idx]
+    if N == 1:
+        return stairs[0]
 
-    # 첫 계단만 밟을 경우
-    if idx == 0:
-        dp[idx] = stairs[0]
-        return dp[idx]
+    dp = [0] * N
+    dp[0] = stairs[0]
 
-    # 첫 번째 계단과 두 번째 계단만 밟을 경우
-    if idx == 1:
-        dp[idx] = stairs[0] + stairs[1]
-        return dp[idx]
+    if N > 1:
+        dp[1] = stairs[0] + stairs[1]
 
-    # 현재 계단을 밟고 두 계단 전에서 올라오는 경우 또는
-    # 현재 계단을 밟고 한 계단 전 계단을 밟고 세 계단 전에서 올라오는 경우
-    dp[idx] = max(max_score(stairs, dp, idx - 2) + stairs[idx],
-                  max_score(stairs, dp, idx - 3) + stairs[idx - 1] + stairs[idx])
+    for i in range(2, N):
+        # 현재 계단을 밟고 두 계단 전에서 올라오는 경우와
+        # 한 계단 전 계단을 밟고 세 계단 전에서 올라오는 경우 중 최대값 선택
+        dp[i] = max(dp[i - 2] + stairs[i], dp[i - 3] + stairs[i - 1] + stairs[i])
 
-    return dp[idx]
+    # 마지막 계단에서의 최대 점수 반환
+    return dp[N - 1]
 
 
 N = int(input())
-dp = [-1] * N
 stairs = [int(input()) for _ in range(N)]
 
-print(max_score(stairs, dp, N - 1))
+# 결과 출력
+print(solve())
