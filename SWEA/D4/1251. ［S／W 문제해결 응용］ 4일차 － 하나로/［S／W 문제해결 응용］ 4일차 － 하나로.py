@@ -1,4 +1,3 @@
-#인접 리스트
 from heapq import heappush, heappop
 
 
