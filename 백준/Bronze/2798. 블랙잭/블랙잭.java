@@ -1,34 +1,41 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-        // N, M 입력받기
-        int N = sc.nextInt();
-        int M = sc.nextInt();
+        // 입력 받기
+        int N = scanner.nextInt(); // 카드 개수
+        int M = scanner.nextInt(); // 목표 값
+        int[] cards = new int[N];
 
-        // 배열 입력받기
-        int[] arr = new int[N];
         for (int i = 0; i < N; i++) {
-            arr[i] = sc.nextInt();
+            cards[i] = scanner.nextInt();
         }
 
-        int result = 0;
+        // 카드 정렬
+        Arrays.sort(cards);
 
-        // 삼중 루프를 사용하여 세 숫자의 합 계산
-        for (int i = 0; i < N; i++) {
-            for (int j = i + 1; j < N; j++) {
+        int maxSum = 0;
+
+        // 3장의 카드 조합 탐색
+        for (int i = 0; i < N - 2; i++) {
+            if ( cards[i] > M) break;
+            for (int j = i + 1; j < N - 1; j++) {
+                if (cards[i] + cards[j] > M) break;
+
                 for (int k = j + 1; k < N; k++) {
-                    int arrSum = arr[i] + arr[j] + arr[k];
+                    int sum = cards[i] + cards[j] + cards[k];
 
-                    // M 이하의 합 중 가장 큰 값 찾기
-                    if (arrSum <= M && arrSum > result) {
-                        result = arrSum;
-                    }
+                    // M을 초과하면 멈춤
+                    if (sum > M) break;
+
+                    // 최댓값 갱신
+                    maxSum = Math.max(maxSum, sum);
                 }
             }
         }
-        System.out.println(result);
+        System.out.println(maxSum);
     }
 }
